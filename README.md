@@ -2,4 +2,4 @@
 
 News in Business Insider crawler
 
-The title, title url, image url and publish time can be crawled.
+The title url, image url and publish time of the news can be crawled.
