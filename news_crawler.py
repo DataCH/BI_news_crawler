@@ -82,18 +82,22 @@ def main():
                 try:
                     news_url_temp=news_temp.find("a")
                     news_url=news_url_temp.get("href")
-                    print news_url
 
                     image_url_temp=news_temp.find("img")
                     image_url=image_url_temp.get("src")
-                    print image_url
 
                     time_temp=onenews.find("li",attrs={"class": "date"})
                     publish_time=time_temp.get_text()
-                    print publish_time
                     
                 except:
                     print "Error!"
+                
+                 if news_url_temp and image_url_temp:
+                    print '========================Page:',page_num,num,'==========================='
+                    print 'News Url:',news_url
+                    print 'Image Url:',image_url
+                    publish_time=date_change(publish_time)
+                    print 'Publish Time:',publish_time
 
 if __name__=="__main__":
     main()
