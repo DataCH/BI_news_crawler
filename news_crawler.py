@@ -26,10 +26,8 @@ def get_html(url):
     return new_respHtml
 
 def date_change(date_str):
-    date_str=date_str.replace(' ','')
     all_month=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
     date_list=re.findall(r'(\w{3}).\s{0,5}(\d{1,2}),\s{0,5}(\d{1,2}):(\d{2})\s{0,5}(\w{2})',date_str)
-    print date_list
     year='2015'
     month=all_month.index(date_list[0][0])+1
     day=date_list[0][1]
@@ -62,7 +60,7 @@ def date_change(date_str):
 
 def main():
     start_page_num=2
-    end_page_num=20
+    end_page_num=2
 
     for page_num in range(start_page_num,end_page_num+1):
         url="http://www.businessinsider.com/sai?page="+str(page_num)
@@ -80,6 +78,10 @@ def main():
                 news_temp=onenews.find("div",attrs={"class": "span4 river-image"})
 
                 try:
+                    news_title_temp=onenews.find("h3")
+                    title_a_temp=news_title_temp.find("a")
+                    news_title=title_a_temp.get_text()
+                    
                     news_url_temp=news_temp.find("a")
                     news_url=news_url_temp.get("href")
 
@@ -90,10 +92,14 @@ def main():
                     publish_time=time_temp.get_text()
                     
                 except:
+                    news_url_temp=None
+                    image_url_temp=None
+                    time_temp=None
                     print "Error!"
-                
-                 if news_url_temp and image_url_temp:
+
+                if news_url_temp and image_url_temp and publish_time:
                     print '========================Page:',page_num,num,'==========================='
+                    print 'News Title: ',news_title
                     print 'News Url:',news_url
                     print 'Image Url:',image_url
                     publish_time=date_change(publish_time)
